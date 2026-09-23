@@ -384,9 +384,7 @@ html.menu-open .nav .btn--nav { opacity: 0; pointer-events: none; }
   gap: 24px;
   height: var(--nav-h);
   padding-inline: var(--gutter);
-  transition: height 0.7s var(--ease);
 }
-.nav.is-solid .nav__inner { height: 74px; }
 .nav__brand .logo-mark { width: 40px; height: 40px; }
 .nav__links { display: flex; align-items: center; gap: clamp(22px, 2.6vw, 46px); margin-left: auto; transition: opacity 0.7s var(--ease), visibility 0.7s; }
 /* Over the film the hotel's own sign owns the top centre: links wait in the menu. */
