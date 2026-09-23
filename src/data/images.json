@@ -1,0 +1,74 @@
+{
+  "exterior": {
+    "widths": [
+      640,
+      1080,
+      1455
+    ],
+    "width": 1455,
+    "height": 1081
+  },
+  "room-classic": {
+    "widths": [
+      640,
+      1080,
+      1447
+    ],
+    "width": 1447,
+    "height": 1087
+  },
+  "room-grand": {
+    "widths": [
+      640,
+      1080,
+      1447
+    ],
+    "width": 1447,
+    "height": 1087
+  },
+  "room-garden": {
+    "widths": [
+      640,
+      1080,
+      1600
+    ],
+    "width": 1672,
+    "height": 941
+  },
+  "hall-soiree": {
+    "widths": [
+      640,
+      1080,
+      1600
+    ],
+    "width": 1672,
+    "height": 941
+  },
+  "hall-grand": {
+    "widths": [
+      640,
+      1080,
+      1600
+    ],
+    "width": 1672,
+    "height": 941
+  },
+  "bath-detail": {
+    "widths": [
+      640,
+      1080,
+      1086
+    ],
+    "width": 1086,
+    "height": 660
+  },
+  "corridor": {
+    "widths": [
+      640,
+      1080,
+      1600
+    ],
+    "width": 1672,
+    "height": 941
+  }
+}
