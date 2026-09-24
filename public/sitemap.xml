@@ -3,4 +3,25 @@
   <url>
     <loc>https://casa-mauve-three.vercel.app/</loc>
   </url>
+  <url>
+    <loc>https://casa-mauve-three.vercel.app/rooms/</loc>
+  </url>
+  <url>
+    <loc>https://casa-mauve-three.vercel.app/banquet-events/</loc>
+  </url>
+  <url>
+    <loc>https://casa-mauve-three.vercel.app/location/</loc>
+  </url>
+  <url>
+    <loc>https://casa-mauve-three.vercel.app/nearby/</loc>
+  </url>
+  <url>
+    <loc>https://casa-mauve-three.vercel.app/nearby/triveni-sangam/</loc>
+  </url>
+  <url>
+    <loc>https://casa-mauve-three.vercel.app/nearby/anand-bhawan/</loc>
+  </url>
+  <url>
+    <loc>https://casa-mauve-three.vercel.app/nearby/prayagraj-junction/</loc>
+  </url>
 </urlset>

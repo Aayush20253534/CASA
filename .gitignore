@@ -11,6 +11,12 @@ Thumbs.db
 !.env.example
 .vercel/
 
+# Generated crawlable SEO pages (created by scripts/generate-seo.mjs).
+public/rooms/
+public/banquet-events/
+public/location/
+public/nearby/
+
 # The pre-upscale Higgsfield render; hero-upscaled.mp4 is the master used for the frames.
 source-video/hero-original.mp4
 .impeccable/
