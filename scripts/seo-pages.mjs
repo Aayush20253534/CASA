@@ -1,12 +1,31 @@
 const HOTEL = {
   name: 'Casa De Grande Boutique Hotel',
   shortName: 'Casa De Grande',
+  phone: '+917007023861',
   phoneDisplay: '+91 70070 23861',
   phoneHref: 'tel:+917007023861',
   whatsapp: 'https://wa.me/919198903333',
   address: 'CY Chintamani Road, Darbhanga Colony, George Town, Prayagraj, Uttar Pradesh 211002, India',
+  postalAddress: {
+    streetAddress: 'CY Chintamani Road, Darbhanga Colony, George Town',
+    addressLocality: 'Prayagraj',
+    addressRegion: 'Uttar Pradesh',
+    postalCode: '211002',
+    addressCountry: 'IN',
+  },
+  latitude: 25.4512832,
+  longitude: 81.8564075,
   maps: 'https://maps.app.goo.gl/AM9mCR7o5t4ZwwGUA',
 };
+
+const HOTEL_AMENITIES = [
+  '24/7 Service',
+  'High-Speed Wi-Fi',
+  'Daily Housekeeping',
+  'Breakfast',
+  'Air Conditioning',
+  'Banquet and Event Facilities',
+];
 
 export const SEO_ROUTES = [
   '/rooms/',
@@ -27,6 +46,7 @@ const NAV = [
 
 const rooms = [
   {
+    id: 'deluxe',
     name: 'Deluxe Room',
     image: '/images/room-classic-1447.webp',
     alt: 'Deluxe room at Casa De Grande Boutique Hotel in Prayagraj',
@@ -34,6 +54,7 @@ const rooms = [
     features: ['Upholstered bed', 'Lounge seating', 'Walnut wardrobe', 'Ensuite bathroom'],
   },
   {
+    id: 'premium',
     name: 'Premium Room',
     image: '/images/room-garden-1600.webp',
     alt: 'Premium room at Casa De Grande Boutique Hotel in George Town, Prayagraj',
@@ -41,6 +62,7 @@ const rooms = [
     features: ['Picture window', 'Bistro table for two', 'Media wall', 'Marble floors'],
   },
   {
+    id: 'suite',
     name: 'Suite',
     image: '/images/room-grand-1447.webp',
     alt: 'Suite at Casa De Grande Boutique Hotel in Prayagraj',
@@ -309,6 +331,146 @@ function absolute(siteUrl, path) {
   return `${siteUrl}${path === '/' ? '/' : path}`;
 }
 
+function hotelSchema(siteUrl) {
+  return {
+    '@type': 'Hotel',
+    '@id': `${siteUrl}/#hotel`,
+    name: HOTEL.name,
+    alternateName: HOTEL.shortName,
+    description: 'A boutique hotel in George Town, Prayagraj offering comfortable rooms, breakfast, Wi-Fi, 24/7 service and banquet facilities.',
+    url: `${siteUrl}/`,
+    telephone: HOTEL.phone,
+    logo: {
+      '@type': 'ImageObject',
+      '@id': `${siteUrl}/#logo`,
+      url: `${siteUrl}/images/logo-mark.png`,
+    },
+    image: [
+      `${siteUrl}/images/exterior-1455.webp`,
+      `${siteUrl}/images/room-grand-1447.webp`,
+      `${siteUrl}/images/hall-grand-1600.webp`,
+    ],
+    address: { '@type': 'PostalAddress', ...HOTEL.postalAddress },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: HOTEL.latitude,
+      longitude: HOTEL.longitude,
+    },
+    hasMap: HOTEL.maps,
+    sameAs: [HOTEL.maps],
+    amenityFeature: HOTEL_AMENITIES.map((name) => ({
+      '@type': 'LocationFeatureSpecification',
+      name,
+      value: true,
+    })),
+    containsPlace: [
+      ...rooms.map((room) => ({ '@id': `${siteUrl}/#room-${room.id}` })),
+      { '@id': `${siteUrl}/#banquet-event-space` },
+    ],
+    mainEntityOfPage: { '@id': `${siteUrl}/#webpage` },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: HOTEL.phone,
+      contactType: 'reservations',
+      url: `${siteUrl}/#book`,
+    },
+  };
+}
+
+function websiteSchema(siteUrl) {
+  return {
+    '@type': 'WebSite',
+    '@id': `${siteUrl}/#website`,
+    url: `${siteUrl}/`,
+    name: HOTEL.name,
+    alternateName: HOTEL.shortName,
+    inLanguage: 'en-IN',
+    publisher: { '@id': `${siteUrl}/#hotel` },
+  };
+}
+
+function roomSchemas(siteUrl) {
+  return rooms.map((room) => ({
+    '@type': 'HotelRoom',
+    '@id': `${siteUrl}/#room-${room.id}`,
+    name: room.name,
+    description: room.description,
+    image: `${siteUrl}${room.image}`,
+    containedInPlace: { '@id': `${siteUrl}/#hotel` },
+    amenityFeature: room.features.map((name) => ({
+      '@type': 'LocationFeatureSpecification',
+      name,
+      value: true,
+    })),
+  }));
+}
+
+function banquetVenueSchema(siteUrl) {
+  return {
+    '@type': 'EventVenue',
+    '@id': `${siteUrl}/#banquet-event-space`,
+    name: 'Casa De Grande Banquet & Event Space',
+    description: 'An elegant banquet and event space within Casa De Grande Boutique Hotel in George Town, Prayagraj.',
+    image: `${siteUrl}/images/hall-grand-1600.webp`,
+    address: { '@type': 'PostalAddress', ...HOTEL.postalAddress },
+    containedInPlace: { '@id': `${siteUrl}/#hotel` },
+  };
+}
+
+function routeEntityNodes(path, siteUrl, canonical) {
+  if (path === '/rooms/') {
+    return [
+      ...roomSchemas(siteUrl),
+      {
+        '@type': 'ItemList',
+        '@id': `${canonical}#room-types`,
+        name: 'Casa De Grande room types',
+        numberOfItems: rooms.length,
+        itemListElement: rooms.map((room, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          item: { '@id': `${siteUrl}/#room-${room.id}` },
+        })),
+      },
+    ];
+  }
+
+  if (path === '/banquet-events/') return [banquetVenueSchema(siteUrl)];
+
+  const landmarks = {
+    '/nearby/triveni-sangam/': 'Triveni Sangam',
+    '/nearby/anand-bhawan/': 'Anand Bhawan',
+    '/nearby/prayagraj-junction/': 'Prayagraj Junction',
+  };
+
+  if (landmarks[path]) {
+    return [{
+      '@type': 'Place',
+      '@id': `${canonical}#landmark`,
+      name: landmarks[path],
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Prayagraj',
+        addressRegion: 'Uttar Pradesh',
+        addressCountry: 'IN',
+      },
+    }];
+  }
+
+  return [];
+}
+
+function routeMainEntity(path, siteUrl, canonical) {
+  if (path === '/rooms/') return `${canonical}#room-types`;
+  if (path === '/banquet-events/') return `${siteUrl}/#banquet-event-space`;
+  return `${siteUrl}/#hotel`;
+}
+
+function routeMentions(path, canonical) {
+  if (path.startsWith('/nearby/') && path !== '/nearby/') return [{ '@id': `${canonical}#landmark` }];
+  return undefined;
+}
+
 function jsonLd(value) {
   return JSON.stringify(value).replace(/</g, '\\u003c');
 }
@@ -319,20 +481,39 @@ export function renderSeoPage(path, siteUrl) {
 
   const canonical = absolute(siteUrl, path);
   const crumbs = breadcrumbs(path, page);
+  const primaryImageId = `${canonical}#primaryimage`;
+  const entityNodes = routeEntityNodes(path, siteUrl, canonical);
+  const mentions = routeMentions(path, canonical);
+  const webPage = {
+    '@type': 'WebPage',
+    '@id': `${canonical}#webpage`,
+    url: canonical,
+    name: page.title,
+    description: page.description,
+    inLanguage: 'en-IN',
+    isPartOf: { '@id': `${siteUrl}/#website` },
+    about: { '@id': `${siteUrl}/#hotel` },
+    mainEntity: { '@id': routeMainEntity(path, siteUrl, canonical) },
+    primaryImageOfPage: { '@id': primaryImageId },
+    publisher: { '@id': `${siteUrl}/#hotel` },
+    breadcrumb: { '@id': `${canonical}#breadcrumb` },
+  };
+  if (mentions) webPage.mentions = mentions;
+
   const schema = {
     '@context': 'https://schema.org',
     '@graph': [
+      hotelSchema(siteUrl),
+      websiteSchema(siteUrl),
+      ...entityNodes,
       {
-        '@type': 'WebPage',
-        '@id': `${canonical}#webpage`,
-        url: canonical,
-        name: page.title,
-        description: page.description,
-        inLanguage: 'en-IN',
-        isPartOf: { '@id': `${siteUrl}/#website` },
-        about: { '@id': `${siteUrl}/#hotel` },
-        breadcrumb: { '@id': `${canonical}#breadcrumb` },
+        '@type': 'ImageObject',
+        '@id': primaryImageId,
+        url: `${siteUrl}${page.image}`,
+        contentUrl: `${siteUrl}${page.image}`,
+        caption: page.imageAlt,
       },
+      webPage,
       {
         '@type': 'BreadcrumbList',
         '@id': `${canonical}#breadcrumb`,

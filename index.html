@@ -46,6 +46,7 @@
             "telephone": "+917007023861",
             "logo": {
               "@type": "ImageObject",
+              "@id": "__SITE_URL__/#logo",
               "url": "__SITE_URL__/images/logo-mark.png"
             },
             "image": [
@@ -67,6 +68,7 @@
               "longitude": 81.8564075
             },
             "hasMap": "https://maps.app.goo.gl/AM9mCR7o5t4ZwwGUA",
+            "sameAs": ["https://maps.app.goo.gl/AM9mCR7o5t4ZwwGUA"],
             "amenityFeature": [
               { "@type": "LocationFeatureSpecification", "name": "24/7 Service", "value": true },
               { "@type": "LocationFeatureSpecification", "name": "High-Speed Wi-Fi", "value": true },
@@ -74,14 +76,88 @@
               { "@type": "LocationFeatureSpecification", "name": "Breakfast", "value": true },
               { "@type": "LocationFeatureSpecification", "name": "Air Conditioning", "value": true },
               { "@type": "LocationFeatureSpecification", "name": "Banquet and Event Facilities", "value": true }
-            ]
+            ],
+            "containsPlace": [
+              { "@id": "__SITE_URL__/#room-deluxe" },
+              { "@id": "__SITE_URL__/#room-premium" },
+              { "@id": "__SITE_URL__/#room-suite" },
+              { "@id": "__SITE_URL__/#banquet-event-space" }
+            ],
+            "mainEntityOfPage": { "@id": "__SITE_URL__/#webpage" },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+917007023861",
+              "contactType": "reservations",
+              "url": "__SITE_URL__/#book"
+            }
+          },
+          {
+            "@type": "HotelRoom",
+            "@id": "__SITE_URL__/#room-deluxe",
+            "name": "Deluxe Room",
+            "description": "A calm, light-filled room with an upholstered bed, lounge seating, a walnut wardrobe and ensuite bathroom.",
+            "image": "__SITE_URL__/images/room-classic-1447.webp",
+            "containedInPlace": { "@id": "__SITE_URL__/#hotel" }
+          },
+          {
+            "@type": "HotelRoom",
+            "@id": "__SITE_URL__/#room-premium",
+            "name": "Premium Room",
+            "description": "A generous room with a wide picture window, bistro table, media wall and polished marble floors.",
+            "image": "__SITE_URL__/images/room-garden-1600.webp",
+            "containedInPlace": { "@id": "__SITE_URL__/#hotel" }
+          },
+          {
+            "@type": "HotelRoom",
+            "@id": "__SITE_URL__/#room-suite",
+            "name": "Suite",
+            "description": "The hotel’s most generous room, with a king bed, sitting area, tray ceiling and blackout blinds.",
+            "image": "__SITE_URL__/images/room-grand-1447.webp",
+            "containedInPlace": { "@id": "__SITE_URL__/#hotel" }
+          },
+          {
+            "@type": "EventVenue",
+            "@id": "__SITE_URL__/#banquet-event-space",
+            "name": "Casa De Grande Banquet & Event Space",
+            "description": "An elegant banquet and event space within Casa De Grande Boutique Hotel in George Town, Prayagraj.",
+            "image": "__SITE_URL__/images/hall-grand-1600.webp",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "CY Chintamani Road, Darbhanga Colony, George Town",
+              "addressLocality": "Prayagraj",
+              "addressRegion": "Uttar Pradesh",
+              "postalCode": "211002",
+              "addressCountry": "IN"
+            },
+            "containedInPlace": { "@id": "__SITE_URL__/#hotel" }
           },
           {
             "@type": "WebSite",
             "@id": "__SITE_URL__/#website",
             "url": "__SITE_URL__/",
             "name": "Casa De Grande Boutique Hotel",
+            "alternateName": "Casa De Grande",
             "inLanguage": "en-IN",
+            "publisher": { "@id": "__SITE_URL__/#hotel" }
+          },
+          {
+            "@type": "ImageObject",
+            "@id": "__SITE_URL__/#primaryimage",
+            "url": "__SITE_URL__/images/exterior-1455.webp",
+            "contentUrl": "__SITE_URL__/images/exterior-1455.webp",
+            "caption": "Casa De Grande Boutique Hotel exterior in George Town, Prayagraj"
+          },
+          {
+            "@type": "WebPage",
+            "@id": "__SITE_URL__/#webpage",
+            "url": "__SITE_URL__/",
+            "name": "Casa De Grande | Boutique Hotel in Prayagraj, George Town",
+            "description": "Stay at Casa De Grande, a boutique hotel in George Town, Prayagraj with comfortable rooms, breakfast, Wi-Fi, 24/7 service and banquet facilities.",
+            "inLanguage": "en-IN",
+            "isPartOf": { "@id": "__SITE_URL__/#website" },
+            "about": { "@id": "__SITE_URL__/#hotel" },
+            "mainEntity": { "@id": "__SITE_URL__/#hotel" },
+            "primaryImageOfPage": { "@id": "__SITE_URL__/#primaryimage" },
             "publisher": { "@id": "__SITE_URL__/#hotel" }
           }
         ]
