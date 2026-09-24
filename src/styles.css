@@ -701,7 +701,7 @@ html.menu-open .book-bar, html.is-locked .book-bar, html.in-moments .book-bar { 
 .story { position: relative; z-index: 2; margin-top: -100vh; background: var(--ivory); box-shadow: 0 -40px 80px -20px rgba(0, 0, 0, 0.35); }
 
 /* ═══ 02 Intro ══════════════════════════════════════════════ */
-.intro { padding-bottom: calc(var(--section) * 0.5); }
+.intro { padding-bottom: 45px; }
 .intro__head {
   display: grid;
   grid-template-columns: 1.3fr 1fr;
@@ -736,7 +736,7 @@ html.menu-open .book-bar, html.is-locked .book-bar, html.in-moments .book-bar { 
 .intro__aside { grid-column: 10 / 13; grid-row: 2; align-self: end; margin: 48px 0 -10%; }
 
 /* ═══ 03 Experience ═════════════════════════════════════════ */
-.experience { padding-top: calc(var(--section) * 0.35); }
+.experience { padding-top: 40px; }
 .section-head .display { max-width: 15ch; }
 .experience__track {
   display: grid;

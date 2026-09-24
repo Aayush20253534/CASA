@@ -13,6 +13,11 @@ const HOLD = 20;
 const OVERLAY = 100;
 const TOTAL = FILM + HOLD + OVERLAY;
 
+// Give the scroll-scrubbed film more physical scroll distance and a slightly
+// softer catch-up so the sequence feels calmer without changing its choreography.
+const HERO_SCROLL_SCALE = 1.18;
+const HERO_SCRUB = 1.05;
+
 const CHAPTERS = [
   {
     num: 'I',
@@ -211,7 +216,7 @@ export default function Hero({ ready }) {
           trigger: el,
           start: 'top top',
           end: 'bottom bottom',
-          scrub: 0.7,
+          scrub: HERO_SCRUB,
         },
         // Runs as the scrub catches up, so the decoded window follows the real playhead.
         onUpdate: () => {
@@ -253,11 +258,11 @@ export default function Hero({ ready }) {
 
   const jumpTo = (vh) => {
     const top = root.current.getBoundingClientRect().top + window.scrollY;
-    scrollToTarget(top + (vh / 100) * window.innerHeight, { duration: 2.6 });
+    scrollToTarget(top + (vh * HERO_SCROLL_SCALE / 100) * window.innerHeight, { duration: 3 });
   };
 
   return (
-    <section ref={root} className="hero" id="top" aria-label="Casa De Grande Boutique Hotel" style={{ '--hero-track': TOTAL }}>
+    <section ref={root} className="hero" id="top" aria-label="Casa De Grande Boutique Hotel" style={{ '--hero-track': TOTAL * HERO_SCROLL_SCALE }}>
       <div className="hero__stage">
         <div className="hero__stage-inner">
           <div className="hero__media">
