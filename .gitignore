@@ -8,3 +8,5 @@ Thumbs.db
 # The pre-upscale Higgsfield render; hero-upscaled.mp4 is the master used for the frames.
 source-video/hero-original.mp4
 .impeccable/
+
+*.patch
