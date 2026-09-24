@@ -5,6 +5,12 @@ dist/
 .DS_Store
 Thumbs.db
 
+# Local/deployment environment files. Keep the documented template only.
+.env
+.env.*
+!.env.example
+.vercel/
+
 # The pre-upscale Higgsfield render; hero-upscaled.mp4 is the master used for the frames.
 source-video/hero-original.mp4
 .impeccable/

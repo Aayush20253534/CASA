@@ -4,9 +4,12 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "predev": "node scripts/generate-seo.mjs development",
     "dev": "vite",
+    "prebuild": "node scripts/generate-seo.mjs production",
     "build": "vite build",
     "preview": "vite preview",
+    "seo:generate": "node scripts/generate-seo.mjs production",
     "assets": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
