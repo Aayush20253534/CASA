@@ -379,6 +379,8 @@ export function renderSeoPage(path, siteUrl) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Manrope:wght@300;400;500;600&display=swap" />
   <link rel="stylesheet" href="/seo-pages.css" />
+  <link rel="stylesheet" href="/seo-motion.css" />
+  <script src="/seo-pages.js"></script>
   <script type="application/ld+json">${jsonLd(schema)}</script>
 </head>
 <body>
