@@ -49,6 +49,9 @@
     const observer = new IntersectionObserver((entries, instance) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
+        entry.target.addEventListener('transitionend', () => {
+          entry.target.style.willChange = 'auto';
+        }, { once: true });
         entry.target.classList.add('is-visible');
         instance.unobserve(entry.target);
       });
@@ -63,7 +66,19 @@
     const progressBar = progress.querySelector('span');
     const heroImage = document.querySelector('.hero-image img');
     const canParallax = window.matchMedia('(min-width: 769px) and (pointer: fine)').matches;
+    const hero = heroImage?.closest('.hero-static');
+    let heroVisible = Boolean(hero);
     let frameRequested = false;
+
+    if (hero && canParallax) {
+      const heroObserver = new IntersectionObserver(([entry]) => {
+        heroVisible = entry.isIntersecting;
+        if (!heroVisible && entry.boundingClientRect.bottom < 0) {
+          heroImage.style.willChange = 'auto';
+        }
+      }, { rootMargin: '20% 0px' });
+      heroObserver.observe(hero);
+    }
 
     const updateScrollMotion = () => {
       frameRequested = false;
@@ -71,8 +86,7 @@
       const ratio = Math.min(Math.max(window.scrollY / scrollable, 0), 1);
       progressBar.style.transform = `scaleX(${ratio})`;
 
-      if (heroImage && canParallax) {
-        const hero = heroImage.closest('.hero-static');
+      if (heroImage && hero && canParallax && heroVisible) {
         const rect = hero.getBoundingClientRect();
         const viewportProgress = Math.min(Math.max((window.innerHeight - rect.top) / (window.innerHeight + rect.height), 0), 1);
         const offset = (viewportProgress - 0.5) * 34;

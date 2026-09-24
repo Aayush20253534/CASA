@@ -19,23 +19,56 @@ export default function App() {
   const [roomId, setRoomId] = useState(null);
   const [modalsRequested, setModalsRequested] = useState(false);
 
-  useEffect(() => initSmoothScroll(), []);
+  // Smooth scrolling does no useful work while the preloader owns the page.
+  // Starting it after the reveal removes a continuous animation-loop callback
+  // from the critical startup path without changing the final interaction.
+  useEffect(() => {
+    if (!ready) return undefined;
+    return initSmoothScroll();
+  }, [ready]);
 
-  // Children create their pinned timelines first; generic reveals come after,
-  // then everything is re-measured in document order.
+  // Children create their pinned timelines first. The generic page-wide
+  // SplitText/reveal work is deliberately deferred until the preloader leaves,
+  // then everything is measured once in document order.
   useLayoutEffect(() => {
+    if (!ready) return undefined;
+    let cancelled = false;
     const cleanup = setupReveals();
     ScrollTrigger.sort();
     ScrollTrigger.refresh();
-    document.fonts?.ready.then(() => ScrollTrigger.refresh());
-    return cleanup;
-  }, []);
+    document.fonts?.ready.then(() => {
+      if (!cancelled) ScrollTrigger.refresh();
+    });
+    return () => {
+      cancelled = true;
+      cleanup();
+    };
+  }, [ready]);
 
-  // Warm the modal chunk shortly after load so the first click is instant.
+  // Warm only the modal chunks during browser idle time. Previously the app
+  // mounted both hidden modal trees after 3.5s, causing avoidable JS/DOM work.
   useEffect(() => {
-    const t = setTimeout(() => setModalsRequested(true), 3500);
-    return () => clearTimeout(t);
-  }, []);
+    if (!ready) return undefined;
+    let timer;
+    let idleId;
+    const warm = () => {
+      void Promise.all([
+        import('./components/BookingModal'),
+        import('./components/RoomModal'),
+      ]).catch(() => {});
+    };
+
+    if ('requestIdleCallback' in window) {
+      idleId = window.requestIdleCallback(warm, { timeout: 5000 });
+    } else {
+      timer = window.setTimeout(warm, 2500);
+    }
+
+    return () => {
+      if (idleId !== undefined) window.cancelIdleCallback(idleId);
+      if (timer !== undefined) window.clearTimeout(timer);
+    };
+  }, [ready]);
 
   const openBooking = useCallback((room = '') => {
     setModalsRequested(true);

@@ -58,11 +58,15 @@ export default function Hero({ ready }) {
     const ctx = cvs.getContext('2d', { alpha: false });
     const portrait = portraitViewport();
     let cancelled = false;
+    let startRemaining = null;
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      cvs.width = Math.round(cvs.clientWidth * dpr);
-      cvs.height = Math.round(cvs.clientHeight * dpr);
+      const width = Math.round(cvs.clientWidth * dpr);
+      const height = Math.round(cvs.clientHeight * dpr);
+      if (cvs.width === width && cvs.height === height) return;
+      cvs.width = width;
+      cvs.height = height;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = 'high';
@@ -151,11 +155,18 @@ export default function Hero({ ready }) {
       if (cancelled) return;
       window.__heroReady = true;
       window.dispatchEvent(new Event('hero:ready'));
+
+      startRemaining = () => {
+        if (!cancelled) void seq.loadRemaining();
+      };
+      if (REDUCED || window.__heroInteractive) startRemaining();
+      else window.addEventListener('hero:interactive', startRemaining, { once: true });
     })();
 
     return () => {
       cancelled = true;
       ro.disconnect();
+      if (startRemaining) window.removeEventListener('hero:interactive', startRemaining);
       gsap.ticker.remove(draw);
       s.seq?.destroy();
       s.seq = null;

@@ -56,7 +56,19 @@ export default function Preloader({ onDone }) {
       if (cancelled) return;
       progress.kill();
       gsap.timeline({
-        onComplete: () => { release(); onDone(); },
+        onComplete: () => {
+          release();
+          onDone();
+          const startBackgroundFrames = () => {
+            window.__heroInteractive = true;
+            window.dispatchEvent(new Event('hero:interactive'));
+          };
+          if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(startBackgroundFrames, { timeout: 1200 });
+          } else {
+            window.setTimeout(startBackgroundFrames, 500);
+          }
+        },
       })
         .to(count, {
           v: 100,

@@ -544,6 +544,7 @@ export function renderSeoPage(path, siteUrl) {
   <link rel="canonical" href="${canonical}" />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="preload" as="image" href="${page.image}" fetchpriority="high" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="en_IN" />
   <meta property="og:site_name" content="${HOTEL.name}" />
@@ -561,7 +562,7 @@ export function renderSeoPage(path, siteUrl) {
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Manrope:wght@300;400;500;600&display=swap" />
   <link rel="stylesheet" href="/seo-pages.css" />
   <link rel="stylesheet" href="/seo-motion.css" />
-  <script src="/seo-pages.js"></script>
+  <script src="/seo-pages.js" defer></script>
   <script type="application/ld+json">${jsonLd(schema)}</script>
 </head>
 <body>
@@ -587,7 +588,7 @@ export function renderSeoPage(path, siteUrl) {
         </div>
       </div>
       <figure class="hero-image">
-        <img src="${page.image}" alt="${page.imageAlt}" width="1455" height="1081" fetchpriority="high" decoding="async" />
+        <img src="${page.image}" alt="${page.imageAlt}" width="1455" height="1081" loading="eager" fetchpriority="high" decoding="async" />
       </figure>
     </section>
 
