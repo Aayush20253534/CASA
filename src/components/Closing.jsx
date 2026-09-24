@@ -37,7 +37,7 @@ export function Footer() {
         <div className="footer__grid">
           <div className="footer__brand">
             <Logo />
-            <p>A refined boutique escape in the heart of {HOTEL.city}.</p>
+            <p>A boutique hotel in George Town, {HOTEL.city}.</p>
           </div>
 
           <nav className="footer__col" aria-label="Footer">

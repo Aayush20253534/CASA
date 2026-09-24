@@ -18,13 +18,13 @@ export function Intro() {
           </h2>
           <div className="intro__copy">
             <p className="lede" data-fade>
-              Behind a cream façade of tall arched windows, Casa De Grande keeps things
-              quiet, warm and well looked after.
+              Behind a cream façade of tall arched windows, Casa De Grande is a boutique hotel in
+              George Town, Prayagraj, made for quiet, comfortable stays.
             </p>
             <p data-fade data-delay="0.1">
               Calm rooms, soft light, polished marble and a team that notices the small
-              things. Set in the leafy lanes of George Town, it’s an easy base for exploring
-              Prayagraj and a quiet place to come back to at the end of the day.
+              things. From George Town, Anand Bhawan, Civil Lines, Prayagraj Junction and
+              Triveni Sangam are all within easy reach.
             </p>
             <TextLink href="#rooms" data-fade data-delay="0.2">Discover the rooms</TextLink>
           </div>
@@ -33,7 +33,7 @@ export function Intro() {
         <div className="intro__media">
           <figure className="intro__main">
             <div className="frame frame--landscape" data-clip data-parallax="7">
-              <Picture name="exterior" alt="Casa De Grande at dusk: three storeys of arched windows glowing above the entrance" sizes="(max-width: 900px) 100vw, 62vw" position="50% 40%" />
+              <Picture name="exterior" alt="Casa De Grande Boutique Hotel in George Town, Prayagraj at dusk" sizes="(max-width: 900px) 100vw, 62vw" position="50% 40%" />
             </div>
             <figcaption data-fade>The façade at blue hour: arches, sconces and warm light</figcaption>
           </figure>
@@ -101,8 +101,8 @@ export function Rooms() {
             Your private <em>escape.</em>
           </h2>
           <p className="rooms__intro" data-fade>
-            Three ways to stay, each with marble underfoot, warm light overhead and quiet
-            that is easy to get used to.
+            Deluxe, Premium and Suite stays in Prayagraj, each with marble underfoot,
+            warm light overhead and quiet that is easy to get used to.
           </p>
         </div>
         <div className="rooms__grid">
@@ -146,8 +146,8 @@ export function Amenities() {
             Considered <em>comforts.</em>
           </h2>
           <p data-fade>
-            The essentials, done properly, with a few quiet indulgences that make a stay
-            feel effortless.
+            Everything for a comfortable Prayagraj stay, from breakfast and Wi-Fi to 24/7
+            service, housekeeping and spaces for celebrations.
           </p>
         </div>
         <ul className="amenities__grid" data-stagger>
@@ -175,9 +175,9 @@ export function Location() {
             Everything <br />within <em>reach.</em>
           </h2>
           <p className="lede" data-fade>
-            On a quiet, tree-lined road in George Town, one of Prayagraj’s most established
-            neighbourhoods, a short drive from the city’s landmarks, the railway junction
-            and the confluence at Triveni Sangam.
+            Casa De Grande is in George Town, Prayagraj, on CY Chintamani Road in Darbhanga
+            Colony, with convenient access to Anand Bhawan, Azad Park, Civil Lines,
+            Prayagraj Junction and Triveni Sangam.
           </p>
           <address className="location__address" data-fade>
             {HOTEL.address.map((line) => (
@@ -217,7 +217,7 @@ export function Book() {
           <h2 className="display display--xxl" data-split>
             Your stay <br />starts <em>here.</em>
           </h2>
-          <p className="lede" data-fade>Reserve your stay at Casa De Grande Boutique Hotel.</p>
+          <p className="lede" data-fade>Reserve a room at Casa De Grande Boutique Hotel in George Town, Prayagraj.</p>
           <div className="book__cta" data-fade>
             <Button variant="solid" size="xl" onClick={() => openBooking()}>Book Now</Button>
           </div>

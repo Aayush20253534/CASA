@@ -36,7 +36,7 @@ export const NAV_LINKS = [
 export const EXPERIENCE = [
   {
     title: 'The Rooms',
-    text: 'Thoughtfully designed spaces created for comfort and calm.',
+    text: 'Comfortable rooms and suites in Prayagraj, designed for calm and easy stays.',
     image: 'bath-detail',
     alt: 'Rain shower against veined grey marble with a potted plant and amenities',
     href: '#rooms',
@@ -44,23 +44,23 @@ export const EXPERIENCE = [
   },
   {
     title: 'The Experience',
-    text: 'A boutique hospitality experience shaped around detail.',
+    text: 'Boutique hospitality in George Town, shaped around comfort and thoughtful detail.',
     image: 'corridor',
     alt: 'Guest corridor with crystal chandelier and walnut doors',
     href: '#amenities',
   },
   {
     title: 'The Atmosphere',
-    text: 'Quiet luxury, warm interiors and timeless character.',
+    text: 'Warm interiors and an elegant banquet hall for stays, gatherings and celebrations.',
     image: 'hall-grand',
     alt: 'Banquet hall lit by tiered crystal chandeliers',
     href: '#gallery',
   },
   {
     title: 'The Location',
-    text: 'A convenient base for discovering the destination.',
+    text: 'A George Town address with easy access to key Prayagraj landmarks.',
     image: 'exterior',
-    alt: 'Casa De Grande façade at dusk',
+    alt: 'Casa De Grande Boutique Hotel exterior in George Town, Prayagraj at dusk',
     href: '#location',
     position: '50% 70%',
   },
@@ -110,22 +110,22 @@ export const MOMENTS = [
 // icon keys map to the line icons in components/Icons.jsx
 export const AMENITIES = [
   { icon: 'bell', title: '24/7 Service', text: 'A front desk that never sleeps and a team always within reach.' },
-  { icon: 'bed', title: 'Comfortable Rooms', text: 'Upholstered beds, crisp linen and blackout blinds for unhurried sleep.' },
+  { icon: 'bed', title: 'Comfortable Rooms', text: 'Deluxe, Premium and Suite rooms with crisp linen and blackout blinds for unhurried sleep.' },
   { icon: 'arch', title: 'Premium Interiors', text: 'Marble floors, warm cove lighting and timeless furnishings.' },
   { icon: 'wifi', title: 'High-Speed Wi-Fi', text: 'Reliable connectivity across rooms and common spaces.' },
   { icon: 'sparkle', title: 'Housekeeping', text: 'Daily, discreet housekeeping that keeps every space immaculate.' },
   { icon: 'cup', title: 'Dining & Breakfast', text: 'Freshly prepared breakfast to begin the day well.' },
-  { icon: 'chandelier', title: 'Banquet & Events', text: 'An elegant hall beneath crystal chandeliers for celebrations.' },
+  { icon: 'chandelier', title: 'Banquet & Events', text: 'An elegant banquet hall in Prayagraj beneath crystal chandeliers for celebrations and gatherings.' },
   { icon: 'climate', title: 'Climate Control', text: 'Individually air-conditioned rooms for year-round comfort.' },
 ];
 
 export const GALLERY = [
-  { image: 'exterior', category: 'Exterior', caption: 'The façade at blue hour', ratio: 'wide', alt: 'Casa De Grande façade with three arched windows at dusk' },
+  { image: 'exterior', category: 'Exterior', caption: 'The façade at blue hour', ratio: 'wide', alt: 'Casa De Grande Boutique Hotel exterior in George Town, Prayagraj at dusk' },
   { image: 'room-grand', category: 'Rooms', caption: 'The Suite', ratio: 'wide', alt: 'Suite with king bed and tray ceiling' },
   { image: 'bath-detail', category: 'Details', caption: 'Stone, chrome and rain showers', ratio: 'wide', alt: 'Rain shower against veined grey marble' },
   { image: 'corridor', category: 'Interiors', caption: 'Crystal-lit corridors', ratio: 'wide', alt: 'Corridor with chandelier and walnut doors' },
   { image: 'room-classic', category: 'Rooms', caption: 'The Deluxe Room', ratio: 'wide', alt: 'Deluxe room with lounge chairs' },
-  { image: 'hall-soiree', category: 'Atmosphere', caption: 'Dressed for an occasion', ratio: 'wide', alt: 'Banquet tables set for an event' },
+  { image: 'hall-soiree', category: 'Atmosphere', caption: 'Dressed for an occasion', ratio: 'wide', alt: 'Casa De Grande banquet hall in Prayagraj set for an event' },
   { image: 'room-garden', category: 'Atmosphere', caption: 'Green outlooks', ratio: 'wide', alt: 'Room overlooking trees' },
 ];
 
