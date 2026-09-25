@@ -57,6 +57,21 @@ export function Arrow({ className = '' }) {
   );
 }
 
+function safeHref(href) {
+  if (typeof href !== 'string') return '#';
+  const value = href.trim();
+  if (value.startsWith('#')) return value;
+  if (value.startsWith('/') && !value.startsWith('//')) return value;
+  if (/^(?:https:\/\/|tel:|mailto:)/i.test(value)) return value;
+  if (import.meta.env.DEV) console.warn(`[links] Blocked unsafe href: ${value}`);
+  return '#';
+}
+
+function linkSecurityProps(href) {
+  if (!/^https:\/\//i.test(href)) return {};
+  return { target: '_blank', rel: 'noopener noreferrer', referrerPolicy: 'no-referrer' };
+}
+
 // Magnetic button: drifts toward the pointer, arrow nudges forward on hover.
 export function Button({ children, variant = 'solid', href, onClick, arrow = true, className = '', size, ...rest }) {
   const ref = useRef(null);
@@ -89,17 +104,18 @@ export function Button({ children, variant = 'solid', href, onClick, arrow = tru
   );
 
   if (href) {
-    const internal = href.startsWith('#');
+    const resolvedHref = safeHref(href);
+    const internal = resolvedHref.startsWith('#');
     return (
       <a
         ref={ref}
         className={cls}
-        href={href}
+        href={resolvedHref}
         onClick={(e) => {
-          if (internal) { e.preventDefault(); scrollToTarget(href); }
+          if (internal) { e.preventDefault(); scrollToTarget(resolvedHref); }
           onClick?.(e);
         }}
-        {...(!internal && { target: '_blank', rel: 'noopener noreferrer' })}
+        {...linkSecurityProps(resolvedHref)}
         {...rest}
       >
         {inner}
@@ -124,13 +140,14 @@ export function SectionLabel({ index, children, light = false }) {
 }
 
 export function TextLink({ href, children, className = '', ...rest }) {
-  const internal = href.startsWith('#');
+  const resolvedHref = safeHref(href);
+  const internal = resolvedHref.startsWith('#');
   return (
     <a
-      href={href}
+      href={resolvedHref}
       className={`text-link ${className}`}
-      onClick={internal ? (e) => { e.preventDefault(); scrollToTarget(href); } : undefined}
-      {...(!internal && !href.startsWith('tel:') && { target: '_blank', rel: 'noopener noreferrer' })}
+      onClick={internal ? (e) => { e.preventDefault(); scrollToTarget(resolvedHref); } : undefined}
+      {...linkSecurityProps(resolvedHref)}
       {...rest}
     >
       {children}

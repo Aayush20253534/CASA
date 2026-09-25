@@ -3,6 +3,9 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "predev": "node scripts/generate-seo.mjs development",
     "dev": "vite",
@@ -10,7 +13,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "seo:generate": "node scripts/generate-seo.mjs production",
-    "assets": "node scripts/optimize-images.mjs"
+    "assets": "node scripts/optimize-images.mjs",
+    "security:check": "node scripts/security-check.mjs",
+    "security:check:dist": "node scripts/security-check.mjs --dist"
   },
   "dependencies": {
     "gsap": "^3.15.0",

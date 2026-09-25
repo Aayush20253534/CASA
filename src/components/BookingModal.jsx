@@ -1,11 +1,10 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { HOTEL, ROOMS } from '../data/content';
-import { addDays, buildWhatsAppMessage, toInputDate, whatsAppUrl } from '../lib/booking';
+import { BOOKING_GUESTS, BOOKING_LIMITS, addDays, buildWhatsAppMessage, toInputDate, whatsAppUrl } from '../lib/booking';
 import { gsap, REDUCED } from '../lib/motion';
 import Modal from './Modal';
 import { Arrow, LogoMark, Picture } from './ui';
 
-const GUESTS = ['1', '2', '3', '4', '5', '6', 'More than 6'];
 
 const blank = (room = '') => {
   const today = toInputDate(new Date());
@@ -25,16 +24,21 @@ function validate(f) {
   const e = {};
   const today = toInputDate(new Date());
   if (f.name.trim().length < 2) e.name = 'Please enter your full name.';
+  else if (f.name.length > BOOKING_LIMITS.name) e.name = `Keep your name under ${BOOKING_LIMITS.name} characters.`;
   const digits = f.phone.replace(/\D/g, '');
   if (!/^[+\d][\d\s()-]*$/.test(f.phone.trim()) || digits.length < 7 || digits.length > 15)
     e.phone = 'Please enter a valid phone number.';
-  if (f.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(f.email.trim()))
+  if (f.phone.length > BOOKING_LIMITS.phone) e.phone = 'This phone number is too long.';
+  if (f.email.length > BOOKING_LIMITS.email) e.email = 'This email address is too long.';
+  else if (f.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(f.email.trim()))
     e.email = 'This email address looks incomplete.';
   if (!f.checkIn) e.checkIn = 'Choose your arrival date.';
   else if (f.checkIn < today) e.checkIn = 'Arrival can’t be in the past.';
   if (!f.checkOut) e.checkOut = 'Choose your departure date.';
   else if (f.checkIn && f.checkOut <= f.checkIn) e.checkOut = 'Departure must be after arrival.';
-  if (!f.guests) e.guests = 'How many guests?';
+  if (!BOOKING_GUESTS.includes(f.guests)) e.guests = 'Choose a valid guest count.';
+  if (f.room && !ROOMS.some((room) => room.name === f.room)) e.room = 'Choose a valid room preference.';
+  if (f.request.length > BOOKING_LIMITS.request) e.request = `Keep requests under ${BOOKING_LIMITS.request} characters.`;
   return e;
 }
 
@@ -96,9 +100,7 @@ export default function BookingModal({ open, room, onClose }) {
       return;
     }
     const url = whatsAppUrl(buildWhatsAppMessage(form));
-    const win = window.open(url, '_blank');
-    if (win) win.opener = null;
-    else window.location.href = url;
+    window.open(url, '_blank', 'noopener,noreferrer');
     setSentUrl(url);
   };
 
@@ -131,13 +133,13 @@ export default function BookingModal({ open, room, onClose }) {
 
               <div className="booking__fields">
                 <Field id="bk-name" label="Full Name" required error={errors.name}>
-                  <input id="bk-name" data-autofocus type="text" autoComplete="name" value={form.name} onChange={set('name')} aria-invalid={!!errors.name} aria-describedby={described('name')} required />
+                  <input id="bk-name" data-autofocus type="text" autoComplete="name" maxLength={BOOKING_LIMITS.name} value={form.name} onChange={set('name')} aria-invalid={!!errors.name} aria-describedby={described('name')} required />
                 </Field>
                 <Field id="bk-phone" label="Phone Number" required error={errors.phone}>
-                  <input id="bk-phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="+91" value={form.phone} onChange={set('phone')} aria-invalid={!!errors.phone} aria-describedby={described('phone')} required />
+                  <input id="bk-phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="+91" maxLength={BOOKING_LIMITS.phone} value={form.phone} onChange={set('phone')} aria-invalid={!!errors.phone} aria-describedby={described('phone')} required />
                 </Field>
                 <Field id="bk-email" label="Email Address" error={errors.email} wide>
-                  <input id="bk-email" type="email" autoComplete="email" value={form.email} onChange={set('email')} aria-invalid={!!errors.email} aria-describedby={described('email')} />
+                  <input id="bk-email" type="email" autoComplete="email" maxLength={BOOKING_LIMITS.email} value={form.email} onChange={set('email')} aria-invalid={!!errors.email} aria-describedby={described('email')} />
                 </Field>
                 <Field id="bk-checkIn" label="Check-in Date" half required error={errors.checkIn}>
                   <input id="bk-checkIn" type="date" min={today} value={form.checkIn} onChange={set('checkIn')} aria-invalid={!!errors.checkIn} aria-describedby={described('checkIn')} required />
@@ -147,17 +149,17 @@ export default function BookingModal({ open, room, onClose }) {
                 </Field>
                 <Field id="bk-guests" label="Number of Guests" half required error={errors.guests}>
                   <select id="bk-guests" value={form.guests} onChange={set('guests')} aria-invalid={!!errors.guests} required>
-                    {GUESTS.map((g) => <option key={g} value={g}>{g}</option>)}
+                    {BOOKING_GUESTS.map((g) => <option key={g} value={g}>{g}</option>)}
                   </select>
                 </Field>
-                <Field id="bk-room" label="Room Preference" half>
-                  <select id="bk-room" value={form.room} onChange={set('room')}>
+                <Field id="bk-room" label="Room Preference" half error={errors.room}>
+                  <select id="bk-room" value={form.room} onChange={set('room')} aria-invalid={!!errors.room} aria-describedby={described('room')}>
                     <option value="">No preference</option>
                     {ROOMS.map((r) => <option key={r.id} value={r.name}>{r.name}</option>)}
                   </select>
                 </Field>
-                <Field id="bk-request" label="Special Request" wide>
-                  <textarea id="bk-request" rows={3} value={form.request} onChange={set('request')} placeholder="Early check-in, airport pickup, a celebration…" />
+                <Field id="bk-request" label="Special Request" error={errors.request} wide>
+                  <textarea id="bk-request" rows={3} maxLength={BOOKING_LIMITS.request} value={form.request} onChange={set('request')} aria-invalid={!!errors.request} aria-describedby={described('request')} placeholder="Early check-in, airport pickup, a celebration…" />
                 </Field>
               </div>
 
@@ -186,7 +188,7 @@ export default function BookingModal({ open, room, onClose }) {
                 WhatsApp. Just press send and our team will confirm availability shortly.
               </p>
               <div className="success__actions" data-success-item>
-                <a className="btn btn--solid" href={sentUrl} target="_blank" rel="noopener noreferrer">
+                <a className="btn btn--solid" href={sentUrl} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer">
                   <span className="btn__label">Open WhatsApp again</span>
                   <Arrow className="btn__arrow" />
                 </a>

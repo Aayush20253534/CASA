@@ -10,7 +10,8 @@
     const progress = document.createElement('div');
     progress.className = 'scroll-progress';
     progress.setAttribute('aria-hidden', 'true');
-    progress.innerHTML = '<span></span>';
+    const progressFill = document.createElement('span');
+    progress.append(progressFill);
     document.body.prepend(progress);
 
     if (reducedMotion) {
