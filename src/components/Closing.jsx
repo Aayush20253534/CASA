@@ -78,6 +78,9 @@ export function Footer() {
 
         <div className="footer__base">
           <p>© {year} Casa De Grande Boutique Hotel. All rights reserved.</p>
+          <p>
+            Website by <a className="text-link text-link--light" href="https://brandspaces.in" target="_blank" rel="noopener noreferrer">BrandSpace</a>
+          </p>
           <p>{HOTEL.coords}</p>
           <button type="button" className="text-link text-link--light" onClick={() => scrollToTarget('#top')}>
             Back to top ↑
