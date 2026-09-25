@@ -36,13 +36,7 @@ jobs:
       - name: Audit dependencies
         run: npm audit --audit-level=high
 
-      - name: Run source security gates
-        run: npm run security:check
-
-      - name: Verify production build
+      - name: Run production release verification
         env:
           SITE_URL: https://casa-mauve-three.vercel.app
-        run: npm run build
-
-      - name: Verify built security policy
-        run: npm run security:check:dist
+        run: npm run release:verify
