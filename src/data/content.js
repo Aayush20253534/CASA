@@ -12,7 +12,7 @@ export const HOTEL = {
     'George Town, Prayagraj',
     'Uttar Pradesh 211002, India',
   ],
-  phone: { display: '+91 70070 23861', href: 'tel:+917007023861' },
+  phone: { display: '+91 91989 03333', href: 'tel:+919198903333' },
   // Booking requests are sent here (country code + number, digits only).
   whatsapp: { number: '919198903333', display: '+91 91989 03333' },
   // Add an address such as 'stay@yourdomain.com' to show it in the footer.
